@@ -16,7 +16,7 @@ var SnakePart = function (x, y, predecessor) {
 
 SnakePart.prototype.HEAD_TEXTURE = PIXI.Texture.fromImage('img/SnakeHeadA1x32.png');
 
-SnakePart.prototype.BODY_TEXTURE = PIXI.Texture.fromImage('img/SnakeBodyA1x32.png');
+SnakePart.prototype.BODY_TEXTURE = PIXI.Texture.fromImage('img/SnakeBodyA2x32.png');
 
 SnakePart.prototype.TAIL_TEXTURE = PIXI.Texture.fromImage('img/TailA1x32.png');
 

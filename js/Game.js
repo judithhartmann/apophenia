@@ -20,6 +20,19 @@ var Game = function () {
 
 Game.prototype.update = function () {
     this.snake.move();
+
+    this.checkCollisions();
+};
+
+Game.prototype.checkCollisions = function () {
+    if (this.snake.snakeHead.position.x < 0 || this.snake.snakeHead.position.x >= GRIDSIZE ||
+        this.snake.snakeHead.position.y < 0 || this.snake.snakeHead.position.y >= GRIDSIZE
+        || this.snake.checkBodyCollision()) {
+        console.log("YOU LOSE");
+        return;
+    }
+
+
 };
 
 Game.prototype.run = function () {

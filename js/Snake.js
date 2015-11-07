@@ -34,13 +34,20 @@ Snake.prototype.setDirection = function (isRight) {
 Snake.prototype.move = function () {
     this.snakeHead.move(this.direction);
 
-    //todo check any pickups?
-
     this.parts.forEach(function (snakePart) {
         if (!snakePart.isHead()) {
             snakePart.moveForward();
         }
     });
+};
+
+Snake.prototype.checkBodyCollision = function () {
+    return this.parts.some(function (snakePart) {
+        if (!snakePart.isHead()) {
+            return (this.snakeHead.position.x === snakePart.position.x && this.snakeHead.position.y === snakePart.position.y)
+        }
+        return false;
+    }, this);
 };
 
 Snake.prototype.getLength = function () {
