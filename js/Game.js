@@ -53,6 +53,9 @@ Game.prototype.handleKeyPress = function (event) {
         case 39: // right
             this.snake.setDirection(true);
             break;
+        case 38:
+            this.snake.grow();
+            break
     }
     event.preventDefault();
 };

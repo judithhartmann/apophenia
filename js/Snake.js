@@ -48,7 +48,7 @@ Snake.prototype.getLength = function () {
 };
 
 Snake.prototype.grow = function () {
-    this.parts.push(new SnakePart(this.snakeHead.x, this.snakeHead.y, this.parts[this.parts.length - 1]));
+    this.parts.push(new SnakePart(this.snakeHead.position.x, this.snakeHead.position.y, this.parts[this.getLength() - 1]));
 };
 
 Snake.prototype.draw = function (stage, grid) {

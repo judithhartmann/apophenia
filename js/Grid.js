@@ -3,8 +3,6 @@ var Grid = function (width, height) {
 
     this.width = width;
 
-    this.CELLWIDTH = 25;
-
     this.createCells();
 };
 
@@ -21,8 +19,8 @@ Grid.prototype.createCells = function () {
 
 Grid.prototype.getPixelPosition = function (position) {
     return {
-        x: position.x * this.CELLWIDTH,
-        y: position.y * this.CELLWIDTH
+        x: position.x * CELLSIZE,
+        y: position.y * CELLSIZE
     };
 };
 

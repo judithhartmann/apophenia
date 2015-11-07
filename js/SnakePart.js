@@ -4,6 +4,8 @@ var SnakePart = function (x, y, predecessor) {
         y: y
     };
 
+    this.previousPosition = this.position;
+
     this.predecessor = predecessor;
 
     this.isMoving = false;
@@ -22,7 +24,7 @@ SnakePart.prototype.createSprite = function (stage) {
 };
 
 SnakePart.prototype.move = function (direction) {
-    this.previousPosition = this.position;
+    this.previousPosition = JSON.parse(JSON.stringify(this.position));
     switch (direction) {
         case DIRECTION.UP:
             this.position.y--;
@@ -41,14 +43,13 @@ SnakePart.prototype.move = function (direction) {
 };
 
 SnakePart.prototype.moveForward = function () {
-    if (this.position == this.predecessor.previousPosition)
+    if (this.position.x == this.predecessor.previousPosition.x && this.position.y == this.predecessor.previousPosition.y)
         this.isMoving = true;
 
-
     if (this.isMoving) {
-        this.previousPosition = this.position;
+        this.previousPosition = JSON.parse(JSON.stringify(this.position));
 
-        this.position = this.predecessor.previousPosition;
+        this.position = JSON.parse(JSON.stringify(this.predecessor.previousPosition));
     }
 };
 
