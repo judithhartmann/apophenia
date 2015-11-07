@@ -1,8 +1,8 @@
-GRIDSIZE = 25;
-CELLSIZE = 25;
+GRIDSIZE = 20;
+CELLSIZE = 32;
 
 var Game = function () {
-    var fps = 4;
+    var fps = 2;
     this.interval = 1000/fps;
     this.then = 0;
 

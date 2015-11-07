@@ -12,14 +12,15 @@ var SnakePart = function (x, y, predecessor) {
 };
 
 SnakePart.prototype.createSprite = function (stage) {
-    /**
-     *
-     * @type {PIXI.Graphics}
-     */
-    this.sprite = new PIXI.Graphics();
 
-    this.sprite.beginFill(0x00F600);
-    this.sprite.drawRect(this.position.x, this.position.y, 22, 22);
+    var texture;
+    if (this.isHead())
+        texture = PIXI.Texture.fromImage('img/SnakeHeadA1x32.png');
+    else
+        texture = PIXI.Texture.fromImage('img/SnakeBodyA1x32.png');
+
+    this.sprite = new PIXI.Sprite(texture);
+    
     stage.addChild(this.sprite);
 };
 
