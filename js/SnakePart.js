@@ -67,7 +67,7 @@ SnakePart.prototype.isHead = function () {
     return (typeof this.predecessor == "undefined");
 };
 
-SnakePart.prototype.isTails = function () {
+SnakePart.prototype.isTail = function () {
     return (typeof this.successor == "undefined");
 };
 
@@ -76,7 +76,7 @@ SnakePart.prototype.draw = function (stage, grid) {
         this.createSprite(stage);
     }
 
-    if (!(this.isHead() || this.isTails()))
+    if (!(this.isHead() || this.isTail()))
         this.sprite.texture = this.BODY_TEXTURE;
 
     var pixelPosition = grid.getPixelPosition(this.position);

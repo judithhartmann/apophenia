@@ -18,9 +18,17 @@ var Game = function () {
     document.body.appendChild(this.renderer.view);
 };
 
-Game.prototype.update = function () {
-    this.snake.move();
+Game.prototype.spawnItem = function () {
+    if (getRandomInt(0, 10) === 1) {
+        var spawnCell = this.grid.pickRandomEmptyCell();
+        new Item(spawnCell, this.stage);
+    }
+};
 
+Game.prototype.update = function () {
+    this.snake.move(this.grid);
+
+    this.spawnItem();
     this.checkCollisions();
 };
 
@@ -30,6 +38,12 @@ Game.prototype.checkCollisions = function () {
         || this.snake.checkBodyCollision()) {
         console.log("YOU LOSE");
         return;
+    }
+
+    var headCell = this.grid.gridCells[this.snake.snakeHead.position.x][this.snake.snakeHead.position.y]
+    if (headCell.item) {
+        this.snake.grow();
+        headCell.item.removeFromStage(this.stage);
     }
 
 

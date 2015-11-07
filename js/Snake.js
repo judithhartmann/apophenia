@@ -31,12 +31,21 @@ Snake.prototype.setDirection = function (isRight) {
     }
 };
 
-Snake.prototype.move = function () {
+/**
+ *
+ * @param {Grid} grid
+ */
+Snake.prototype.move = function (grid) {
     this.snakeHead.move(this.direction);
+    grid.addSnakeToCell(this.snakeHead.position);
 
     this.parts.forEach(function (snakePart) {
         if (!snakePart.isHead()) {
             snakePart.moveForward();
+        }
+
+        if (snakePart.isTail()) {
+            grid.removeSnakeFromToCell(snakePart.position);
         }
     });
 };
