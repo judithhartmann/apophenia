@@ -13,9 +13,13 @@ var Game = function (level) {
     loadJSON("levels/level" + this.levelNumber + ".json", this.initializeGame.bind(this));
 };
 
-Game.prototype.ItemSound = new Audio("sounds/Item.wav");
+Game.prototype.ItemSound = new Audio("sounds/eggGet.wav");
 
 Game.prototype.LavaHitSound = new Audio("sounds/lavaHit.wav");
+
+Game.prototype.WinSound = new Audio("sounds/levelUp.wav");
+
+Game.prototype.LossSound = new Audio("sounds/lose.wav");
 
 Game.prototype.BackgroundSound = new Audio("http://www.nihilus.net/soundtracks/Vast%20Difference.mp3");
 
@@ -107,7 +111,9 @@ Game.prototype.triggerWin = function () {
 
     this.stage.addChild(this.endSprite);
 
-    RENDERER.render(this.stage)
+    this.WinSound.play();
+
+    RENDERER.render(this.stage);
 };
 
 Game.prototype.triggerLoss = function () {
@@ -122,6 +128,9 @@ Game.prototype.triggerLoss = function () {
     this.endSprite.position.y = GRIDSIZE * CELLSIZE / 2;
 
     this.stage.addChild(this.endSprite);
+
+    this.LossSound.play();
+    
     RENDERER.render(this.stage)
 };
 
