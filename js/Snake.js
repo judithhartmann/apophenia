@@ -29,6 +29,7 @@ Snake.prototype.setDirection = function (isRight) {
             break;
 
     }
+    this.snakeHead.sprite.texture = this.snakeHead.HEAD_TEXTURE[this.direction];
 };
 
 /**

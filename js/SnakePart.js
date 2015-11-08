@@ -14,19 +14,34 @@ var SnakePart = function (x, y, predecessor) {
     this.isMoving = false;
 };
 
-SnakePart.prototype.HEAD_TEXTURE = PIXI.Texture.fromImage('img/SnakeHeadA1x24.png');
+SnakePart.prototype.HEAD_TEXTURE = [
+    PIXI.Texture.fromImage('img/SnakeHeadC1x24Up.png'),
+    PIXI.Texture.fromImage('img/SnakeHeadC1x24Right.png'),
+    PIXI.Texture.fromImage('img/SnakeHeadC1x24Down.png'),
+    PIXI.Texture.fromImage('img/SnakeHeadC1x24Left.png')
+];
 
-SnakePart.prototype.BODY_TEXTURE = PIXI.Texture.fromImage('img/SnakeBodyA2x24.png');
+SnakePart.prototype.BODY_TEXTURE = [
+    PIXI.Texture.fromImage('img/SnakeBodyB1x24Vertical.png'),
+    PIXI.Texture.fromImage('img/SnakeBodyB1x24.png'),
+    PIXI.Texture.fromImage('img/SnakeBodyB1x24Vertical.png'),
+    PIXI.Texture.fromImage('img/SnakeBodyB1x24.png')
+];
 
-SnakePart.prototype.TAIL_TEXTURE = PIXI.Texture.fromImage('img/TailA2.png');
+SnakePart.prototype.TAIL_TEXTURE = [
+    PIXI.Texture.fromImage('img/TailB1Up.png'),
+    PIXI.Texture.fromImage('img/TailB1Right.png'),
+    PIXI.Texture.fromImage('img/TailB1Down.png'),
+    PIXI.Texture.fromImage('img/TailB1Left.png')
+];
 
 SnakePart.prototype.createSprite = function (stage) {
 
     var texture;
     if (this.isHead())
-        texture = this.HEAD_TEXTURE;
+        texture = this.HEAD_TEXTURE[1];
     else
-        texture = this.TAIL_TEXTURE;
+        texture = this.TAIL_TEXTURE[1];
 
     this.sprite = new PIXI.Sprite(texture);
 
@@ -49,7 +64,6 @@ SnakePart.prototype.move = function (direction) {
             this.position.x--;
             break;
     }
-
 };
 
 SnakePart.prototype.moveForward = function () {
@@ -76,8 +90,24 @@ SnakePart.prototype.draw = function (stage, grid) {
         this.createSprite(stage);
     }
 
-    if (!(this.isHead() || this.isTail()))
-        this.sprite.texture = this.BODY_TEXTURE;
+    var diffX = this.position.x - this.previousPosition.x;
+    var diffY = this.position.y - this.previousPosition.y;
+    if (!this.isHead()) {
+        var textureObject = this.isTail() ? this.TAIL_TEXTURE : this.BODY_TEXTURE;
+        if (diffX != 0) {
+            if (diffX > 0) {
+                this.sprite.texture = textureObject[DIRECTION.RIGHT]
+            } else {
+                this.sprite.texture = textureObject[DIRECTION.LEFT]
+            }
+        } else {
+            if (diffY > 0) {
+                this.sprite.texture = textureObject[DIRECTION.DOWN]
+            } else {
+                this.sprite.texture = textureObject[DIRECTION.UP]
+            }
+        }
+    }
 
     var pixelPosition = grid.getPixelPosition(this.position);
 
