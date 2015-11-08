@@ -16,8 +16,8 @@ var Game = function (level) {
 GAMESTATE = {
     RUNNING: 0,
     PAUSE: 1,
-    WON: 1,
-    LOST: 1
+    WON: 2,
+    LOST: 3
 };
 
 Game.prototype.initializeGame= function(level) {
@@ -157,13 +157,16 @@ Game.prototype.handleKeyPress = function (event) {
                 this.snake.setDirection(true);
                 break;
         }
+        return;
     }
     if (this.gameState === GAMESTATE.WON) {
         this.startNewGame(this.levelNumber + 1);
+        return;
     }
 
     if (this.gameState === GAMESTATE.LOST) {
-        this.startNewGame(this.levelNumber)
+        this.startNewGame(this.levelNumber);
+        return;
     }
     event.preventDefault();
 };
