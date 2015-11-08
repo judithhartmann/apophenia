@@ -1,10 +1,12 @@
-GRIDSIZE = 20;
-CELLSIZE = 32;
+GRIDSIZE = 32;
+CELLSIZE = 24;
 
 var Game = function () {
-    var fps = 2;
+    var fps = 5;
     this.interval = 1000/fps;
     this.then = 0;
+
+    this.isRunning = true;
 
     this.stage = new PIXI.Container();
 
@@ -17,6 +19,8 @@ var Game = function () {
     //Add the canvas to the HTML document
     document.body.appendChild(this.renderer.view);
 };
+
+Game.prototype.lossTexture = PIXI.Texture.fromImage('img/youlose-x256.png');
 
 Game.prototype.spawnItem = function () {
     if (getRandomInt(0, 10) === 1) {
@@ -36,7 +40,7 @@ Game.prototype.checkCollisions = function () {
     if (this.snake.snakeHead.position.x < 0 || this.snake.snakeHead.position.x >= GRIDSIZE ||
         this.snake.snakeHead.position.y < 0 || this.snake.snakeHead.position.y >= GRIDSIZE
         || this.snake.checkBodyCollision()) {
-        console.log("YOU LOSE");
+        this.triggerLoss();
         return;
     }
 
@@ -49,7 +53,25 @@ Game.prototype.checkCollisions = function () {
 
 };
 
+Game.prototype.triggerLoss = function () {
+    this.isRunning = false;
+
+    this.lossSprite = new PIXI.Sprite(this.lossTexture);
+
+    this.lossSprite.anchor.x = 0.5;
+    this.lossSprite.anchor.y = 0.5;
+
+    this.lossSprite.position.x = GRIDSIZE * CELLSIZE / 2;
+    this.lossSprite.position.y = GRIDSIZE * CELLSIZE / 2;
+
+    this.stage.addChild(this.lossSprite);
+
+
+};
+
 Game.prototype.run = function () {
+    if (!GAME.isRunning)
+        return;
 
     requestAnimationFrame(GAME.run);
 
@@ -72,7 +94,7 @@ Game.prototype.draw = function () {
 };
 
 Game.prototype.handleKeyPress = function (event) {
-    console.log(event.keyCode, this);
+//    console.log(event.keyCode, this);
     switch (event.keyCode) {
         case 37: // left
             this.snake.setDirection(false);
@@ -80,9 +102,6 @@ Game.prototype.handleKeyPress = function (event) {
         case 39: // right
             this.snake.setDirection(true);
             break;
-        case 38:
-            this.snake.grow();
-            break
     }
     event.preventDefault();
 };

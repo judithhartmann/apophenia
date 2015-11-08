@@ -15,6 +15,9 @@ Item.prototype.addToStage = function (gridCell, stage) {
     this.sprite.position.x = pixelPosition.x;
     this.sprite.position.y = pixelPosition.y;
 
+    this.sprite.scale.x *= 0.75;
+    this.sprite.scale.y *= 0.75;
+
     stage.addChild(this.sprite);
 };
 

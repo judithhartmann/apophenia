@@ -30,6 +30,10 @@ SnakePart.prototype.createSprite = function (stage) {
 
     this.sprite = new PIXI.Sprite(texture);
 
+
+    this.sprite.scale.x *= 0.75;
+    this.sprite.scale.y *= 0.75;
+
     stage.addChild(this.sprite);
 };
 
