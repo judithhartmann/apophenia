@@ -67,6 +67,15 @@ Snake.prototype.grow = function () {
     this.parts.push(new SnakePart(this.snakeHead.position.x, this.snakeHead.position.y, this.parts[this.getLength() - 1]));
 };
 
+Snake.prototype.shrink = function (stage) {
+    var tail =  this.parts.pop();
+
+    if (tail.predecessor)
+        tail.predecessor.successor = undefined;
+
+    stage.removeChild(tail.sprite);
+};
+
 Snake.prototype.draw = function (stage, grid) {
     this.parts.forEach(function (part) {
         part.draw(stage, grid);

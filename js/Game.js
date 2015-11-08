@@ -75,6 +75,12 @@ Game.prototype.checkCollisions = function () {
         headCell.item.removeFromStage(this.stage);
     }
 
+    if (headCell.isLava) {
+        this.snake.shrink(this.stage);
+
+        if (this.snake.getLength() === 0)
+            this.triggerLoss();
+    }
 
 };
 
