@@ -14,9 +14,9 @@ var SnakePart = function (x, y, predecessor) {
     this.isMoving = false;
 };
 
-SnakePart.prototype.HEAD_TEXTURE = PIXI.Texture.fromImage('img/SnakeHeadA1x32.png');
+SnakePart.prototype.HEAD_TEXTURE = PIXI.Texture.fromImage('img/SnakeHeadA1x24.png');
 
-SnakePart.prototype.BODY_TEXTURE = PIXI.Texture.fromImage('img/SnakeBodyA2x32.png');
+SnakePart.prototype.BODY_TEXTURE = PIXI.Texture.fromImage('img/SnakeBodyA2x24.png');
 
 SnakePart.prototype.TAIL_TEXTURE = PIXI.Texture.fromImage('img/TailA1x32.png');
 
@@ -26,13 +26,9 @@ SnakePart.prototype.createSprite = function (stage) {
     if (this.isHead())
         texture = this.HEAD_TEXTURE;
     else
-        texture = this.TAIL_TEXTURE;
+        texture = this.BODY_TEXTURE;
 
     this.sprite = new PIXI.Sprite(texture);
-
-
-    this.sprite.scale.x *= 0.75;
-    this.sprite.scale.y *= 0.75;
 
     stage.addChild(this.sprite);
 };
@@ -80,8 +76,8 @@ SnakePart.prototype.draw = function (stage, grid) {
         this.createSprite(stage);
     }
 
-    if (!(this.isHead() || this.isTail()))
-        this.sprite.texture = this.BODY_TEXTURE;
+  //  if (!(this.isHead() || this.isTail()))
+  //      this.sprite.texture = this.BODY_TEXTURE;
 
     var pixelPosition = grid.getPixelPosition(this.position);
 
