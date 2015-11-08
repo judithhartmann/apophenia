@@ -66,13 +66,17 @@ var GridCell = function (x, y, isPattern) {
 
     this.hasSnake = false;
 
-    var texture = this.isPattern?  PIXI.Texture.fromImage('img/examplePatternx24.png') :  PIXI.Texture.fromImage('img/exampleTilex24.png');
+    var texture = this.isPattern?  this.patternTiles[getRandomInt(0, 5) > 3? 0 : 1] :  this.normalTiles[getRandomInt(0, 5) > 3? 0 : 1] ;
 
     this.sprite = new PIXI.Sprite(texture);
 
     this.sprite.position.x = this.getPixelPosition().x;
     this.sprite.position.y = this.getPixelPosition().y;
 };
+
+GridCell.prototype.normalTiles = [PIXI.Texture.fromImage('img/grassA.png'), PIXI.Texture.fromImage('img/grassFlatLight.png')];
+
+GridCell.prototype.patternTiles = [PIXI.Texture.fromImage('img/grassB.png'), PIXI.Texture.fromImage('img/grassFlatDark.png')];
 
 GridCell.prototype.setItem = function (item) {
     this.item = item;
