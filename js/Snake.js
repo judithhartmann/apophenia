@@ -73,7 +73,8 @@ Snake.prototype.shrink = function (stage) {
 
     if (tail.predecessor) {
         tail.predecessor.successor = undefined;
-        tail.predecessor.sprite.texture = tail.TAIL_TEXTURE;
+        if (!tail.predecessor.isHead())
+            tail.predecessor.sprite.texture = tail.TAIL_TEXTURE[0];
     }
 
     stage.removeChild(tail.sprite);

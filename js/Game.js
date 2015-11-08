@@ -13,6 +13,12 @@ var Game = function (level) {
     loadJSON("levels/level" + this.levelNumber + ".json", this.initializeGame.bind(this));
 };
 
+Game.prototype.ItemSound = new Audio("sounds/Item.wav");
+
+Game.prototype.LavaHitSound = new Audio("sounds/lavaHit.wav");
+
+Game.prototype.BackgroundSound = new Audio("http://www.nihilus.net/soundtracks/Vast%20Difference.mp3");
+
 GAMESTATE = {
     RUNNING: 0,
     PAUSE: 1,
@@ -32,6 +38,9 @@ Game.prototype.initializeGame= function(level) {
     this.snake = new Snake(5, 5);
 
     this.gameState = GAMESTATE.RUNNING;
+
+    this.BackgroundSound.play();
+
     this.run();
 };
 
@@ -71,13 +80,14 @@ Game.prototype.checkCollisions = function () {
 
     var headCell = this.grid.gridCells[this.snake.snakeHead.position.x][this.snake.snakeHead.position.y]
     if (headCell.item) {
+        this.ItemSound.play();
         this.snake.grow();
         headCell.item.removeFromStage(this.stage);
     }
 
     if (headCell.isLava) {
         this.snake.shrink(this.stage);
-
+        this.LavaHitSound.play();
         if (this.snake.getLength() === 0)
             this.triggerLoss();
     }
