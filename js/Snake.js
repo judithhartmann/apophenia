@@ -70,8 +70,10 @@ Snake.prototype.grow = function () {
 Snake.prototype.shrink = function (stage) {
     var tail =  this.parts.pop();
 
-    if (tail.predecessor)
+    if (tail.predecessor) {
         tail.predecessor.successor = undefined;
+        tail.predecessor.sprite.texture = tail.TAIL_TEXTURE;
+    }
 
     stage.removeChild(tail.sprite);
 };

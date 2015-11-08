@@ -18,7 +18,7 @@ SnakePart.prototype.HEAD_TEXTURE = PIXI.Texture.fromImage('img/SnakeHeadA1x24.pn
 
 SnakePart.prototype.BODY_TEXTURE = PIXI.Texture.fromImage('img/SnakeBodyA2x24.png');
 
-SnakePart.prototype.TAIL_TEXTURE = PIXI.Texture.fromImage('img/TailA1x32.png');
+SnakePart.prototype.TAIL_TEXTURE = PIXI.Texture.fromImage('img/TailA2.png');
 
 SnakePart.prototype.createSprite = function (stage) {
 
@@ -26,7 +26,7 @@ SnakePart.prototype.createSprite = function (stage) {
     if (this.isHead())
         texture = this.HEAD_TEXTURE;
     else
-        texture = this.BODY_TEXTURE;
+        texture = this.TAIL_TEXTURE;
 
     this.sprite = new PIXI.Sprite(texture);
 
@@ -76,8 +76,8 @@ SnakePart.prototype.draw = function (stage, grid) {
         this.createSprite(stage);
     }
 
-  //  if (!(this.isHead() || this.isTail()))
-  //      this.sprite.texture = this.BODY_TEXTURE;
+    if (!(this.isHead() || this.isTail()))
+        this.sprite.texture = this.BODY_TEXTURE;
 
     var pixelPosition = grid.getPixelPosition(this.position);
 
