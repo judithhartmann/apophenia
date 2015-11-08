@@ -56,6 +56,18 @@ Grid.prototype.removeSnakeFromToCell = function (position) {
         this.gridCells[position.x][position.y].hasSnake = false;
 };
 
+Grid.prototype.checkWin = function () {
+    return this.gridCells.every(function (gridColumn) {
+        return gridColumn.every(function (gridCell) {
+            if (gridCell.isPattern) {
+                return gridCell.hasSnake;
+            } else {
+                return true;
+            }
+        });
+    })
+};
+
 var GridCell = function (x, y, isPattern) {
     this.position = {
         x: x,

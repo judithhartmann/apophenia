@@ -45,7 +45,7 @@ Snake.prototype.move = function (grid) {
         }
 
         if (snakePart.isTail()) {
-            grid.removeSnakeFromToCell(snakePart.position);
+            grid.removeSnakeFromToCell(snakePart.previousPosition);
         }
     });
 };

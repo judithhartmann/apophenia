@@ -22,7 +22,12 @@ function loadJSON(file, callback) {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
-    GAME = new Game(1);
+    RENDERER = PIXI.autoDetectRenderer(GRIDSIZE * CELLSIZE, GRIDSIZE * CELLSIZE, {backgroundColor : 0x1099bb});
+
+    //Add the canvas to the HTML document
+    document.body.appendChild(RENDERER.view);
+
+    GAME = new Game(0);
 
     window.addEventListener("keydown", function (event) {
         GAME.handleKeyPress(event);
