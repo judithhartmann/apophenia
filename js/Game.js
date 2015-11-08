@@ -1,23 +1,36 @@
 GRIDSIZE = 32;
 CELLSIZE = 24;
 
-var Game = function () {
+var Game = function (level) {
     var fps = 5;
     this.interval = 1000/fps;
     this.then = 0;
 
     this.isRunning = true;
+    this.levelNumber = level;
+
+    loadJSON("levels/level" + this.levelNumber + ".json", this.initializeGame.bind(this));
+};
+
+Game.prototype.initializeGame= function(level) {
+
+    this.level = JSON.parse(level);
+    console.log(this.level);
 
     this.stage = new PIXI.Container();
 
+    this.grid = new Grid(GRIDSIZE, GRIDSIZE, this.level);
+    this.stage.addChild(this.grid.container);
+
     this.snake = new Snake(5, 5);
 
-    this.grid = new Grid(GRIDSIZE, GRIDSIZE);
 
     this.renderer = PIXI.autoDetectRenderer(GRIDSIZE * CELLSIZE, GRIDSIZE * CELLSIZE, {backgroundColor : 0x1099bb});
 
     //Add the canvas to the HTML document
     document.body.appendChild(this.renderer.view);
+
+    this.run();
 };
 
 Game.prototype.lossTexture = PIXI.Texture.fromImage('img/youlose-x256.png');

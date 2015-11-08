@@ -1,7 +1,11 @@
-var Grid = function (width, height) {
+var Grid = function (width, height, level) {
     this.height = height;
 
     this.width = width;
+
+    this.level = level;
+
+    this.container = new PIXI.Container();
 
     this.createCells();
 };
@@ -12,7 +16,9 @@ Grid.prototype.createCells = function () {
     for (var x = 0; x < this.width; x++) {
         this.gridCells[x] = [];
         for (var y = 0; y < this.height; y++) {
-            this.gridCells[x][y] = new GridCell(x, y);
+            var isPattern = this.level.pattern[y][x] === 1;
+            this.gridCells[x][y] = new GridCell(x, y, isPattern);
+            this.container.addChild(this.gridCells[x][y].sprite)
         }
     }
 };
@@ -50,13 +56,22 @@ Grid.prototype.removeSnakeFromToCell = function (position) {
         this.gridCells[position.x][position.y].hasSnake = false;
 };
 
-var GridCell = function (x, y) {
+var GridCell = function (x, y, isPattern) {
     this.position = {
         x: x,
         y: y
     };
 
+    this.isPattern = isPattern;
+
     this.hasSnake = false;
+
+    var texture = this.isPattern?  PIXI.Texture.fromImage('img/examplePatternx24.png') :  PIXI.Texture.fromImage('img/exampleTilex24.png');
+
+    this.sprite = new PIXI.Sprite(texture);
+
+    this.sprite.position.x = this.getPixelPosition().x;
+    this.sprite.position.y = this.getPixelPosition().y;
 };
 
 GridCell.prototype.setItem = function (item) {
