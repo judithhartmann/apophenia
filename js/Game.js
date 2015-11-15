@@ -130,7 +130,7 @@ Game.prototype.triggerLoss = function () {
     this.stage.addChild(this.endSprite);
 
     this.LossSound.play();
-    
+
     RENDERER.render(this.stage)
 };
 
@@ -182,16 +182,13 @@ Game.prototype.handleKeyPress = function (event) {
                 this.snake.setDirection(true);
                 break;
         }
-        return;
     }
     if (this.gameState === GAMESTATE.WON) {
         this.startNewGame(this.levelNumber + 1);
-        return;
     }
 
     if (this.gameState === GAMESTATE.LOST) {
         this.startNewGame(this.levelNumber);
-        return;
     }
     event.preventDefault();
 };
